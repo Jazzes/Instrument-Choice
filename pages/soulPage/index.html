@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="main.css">
+    <title>Player</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+</head>
+<body>
+
+<div class="mainCONT">
+
+    <div id="RooT" class="RooT">
+
+        <h1 class="nameOfPageC">
+            Выбор по темпераменту
+        </h1>
+
+        <div class="FimboContainer" id="FimboContainer">
+            <div class="FimboContainer__content__temp">
+                <div class="FimboContainer__content__h">Кто Вы по темпераменту?</div>
+                <div class="FimboContainer__content__ans__t" id="contemp">
+
+                    <div class="FimboContainer__content__button__cont">
+                        <a target="_blank"
+                           href="https://testometrika.com/personality-and-temper/the-formula-of-temperament-a-belov/"
+                           class="FimboContainer__content__button">Пройти тест</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="FimboContainer__content__horo">
+                <div class="FimboContainer__content__h">Кто Вы по гороскопу?</div>
+
+                <div class="FimboContainer__content__ans__h" id="conhoro">
+
+                    <div class="FimboContainer__content__select__cont">
+                        <div class="FimboContainer__content__select" id="selectHoroscope">
+                            <span id="zodiac-sign">Знаки зодиака</span>
+                            <svg style="margin-left: 10px;" width="13" height="12" viewBox="0 0 13 12" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.5 12L0.00480938 0.75L12.9952 0.75L6.5 12Z" fill="#1F1F1F"/>
+                            </svg>
+                        </div>
+
+                        <div class="FimboContainer__content__list__cont" id="listHorCont">
+                            <div class="FimboContainer__content__list" id="listHor">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="FimboContainer__content__h" style="margin-top: 10px">Узнать по дате рождения</div>
+
+                <div class="FimboContainer__content__ans__h" id="conhoroSel">
+
+                    <div class="FimboContainer__content__select__cont">
+                        <div class="FimboContainer__content__select" id="selectHoroscopeM">
+                            <span id="zodiac-signM">Месяц</span>
+                            <svg style="margin-left: 10px;" width="13" height="12" viewBox="0 0 13 12" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.5 12L0.00480938 0.75L12.9952 0.75L6.5 12Z" fill="#1F1F1F"/>
+                            </svg>
+                        </div>
+
+                        <div class="FimboContainer__content__list__cont" id="listHorContM">
+                            <div class="FimboContainer__content__list" id="listHorM">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="FimboContainer__content__select__cont FimboContainer__content__select__cont_m1">
+                        <div class="FimboContainer__content__select" id="selectHoroscopeD">
+                            <span id="zodiac-signD">День</span>
+                            <svg style="margin-left: 10px;" width="13" height="12" viewBox="0 0 13 12" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.5 12L0.00480938 0.75L12.9952 0.75L6.5 12Z" fill="#1F1F1F"/>
+                            </svg>
+                        </div>
+
+                        <div class="FimboContainer__content__list__cont" id="listHorContD">
+                            <div class="FimboContainer__content__list" id="listHorD">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="FimboContainer__content__col">
+                <div class="FimboContainer__content__h">Выберите Ваш любимый цвет</div>
+                <div class="FimboContainer__content__ans__c" id="concol">
+                </div>
+            </div>
+        </div>
+
+        <div class="progressBarr">
+            <div class="progressBarr__main__pos">
+                <div class="progressBarr__row">
+                    <div class="progressBarr__row__item">
+                        <div class="progressBarr__row__item__circ" id="circDes"></div>
+                        По дизайну
+                    </div>
+                    <div class="progressBarr__row__item">
+                        <div class="progressBarr__row__item__circ" id="circSound"></div>
+                        По звучанию
+                    </div>
+                    <div class="progressBarr__row__item">
+                        <div class="progressBarr__row__item__circ" id="circTrack"></div>
+                        По песням
+                    </div>
+                    <div class="progressBarr__row__item">
+                        <div class="progressBarr__row__item__circ" id="circSoul"></div>
+                        По душе
+                    </div>
+                </div>
+                <div class="progressBarr__percent">
+
+                    <div class="progressBarr__percent__val">
+                        <svg id="circProgSVG" class="progressBarr__progSVG" height="45" viewBox="0 0 109 94" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M25.0238 90.2373C22.1509 93.7204 16.9429 94.2506 13.9283 90.8895C8.31648 84.6326 4.20205 77.133 1.95279 68.9582C-1.02294 58.1432 -0.589149 46.6734 3.19496 36.1141C6.97906 25.5547 13.9291 16.4201 23.0968 9.95689C32.2644 3.49363 43.2031 0.0165239 54.42 5.87154e-05C65.6369 -0.0164065 76.5857 3.42857 85.7723 9.86489C94.9589 16.3012 101.936 25.4153 105.751 35.9635C109.566 46.5117 110.033 57.9802 107.089 68.8039C104.864 76.9852 100.772 84.4969 95.1783 90.7702C92.1736 94.1401 86.9641 93.6252 84.081 90.1506V90.1506C81.198 86.6761 81.765 81.5634 84.547 78.0074C87.6619 74.026 89.9716 69.443 91.3126 64.5127C93.3734 56.9361 93.0462 48.9082 90.3756 41.5245C87.705 34.1407 82.8212 27.7608 76.3906 23.2554C69.96 18.75 62.2958 16.3385 54.444 16.35C46.5922 16.3616 38.9351 18.7955 32.5178 23.3198C26.1004 27.8441 21.2353 34.2383 18.5865 41.6299C15.9376 49.0214 15.6339 57.0502 17.717 64.6208C19.0724 69.5471 21.3956 74.1232 24.5221 78.0955C27.3145 81.6434 27.8966 86.7543 25.0238 90.2373V90.2373Z" fill="#C8C8C8"/>
+                            <g>
+                            </g>
+                        </svg>
+                        <div class="progressBarr__percent__cif" id="cifraProgBa">
+                            0
+                        </div>
+                    </div>
+                    Прогресс
+                </div>
+            </div>
+
+            <a class="progressBarr__next" id="nextProgA">К следующему тесту</a>
+        </div>
+
+    </div>
+
+    <div class="TechSupport">
+        <div class="TechSupport_text">
+            БЛИЗИТСЯ НОВОЕ ОБНОВЛЕНИЕ
+        </div>
+        <div class="TechSupport_little">
+            Наш сайт находится в стадии разработки, и мы почти готовы к работе!
+        </div>
+    </div>
+
+    <div class="loaderr"></div>
+
+</div>
+
+
+
+
+
+</body>
+<script src="main.js"></script>
+</html>
