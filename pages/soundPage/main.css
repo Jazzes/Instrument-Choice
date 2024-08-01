@@ -120,6 +120,9 @@ body {
     font-size: 15px;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    color: black !important;
+    text-decoration: 1px solid underline black !important;
 }
 
 .progressBarr__row__item__circ {
@@ -282,7 +285,7 @@ body {
 .FimboContainer {
     display: flex;
     flex-wrap: wrap;
-    width: 1160px;
+    width: 1080px;
     margin-top: 50px;
 }
 
@@ -290,19 +293,21 @@ body {
     border-radius: 20px;
     background: #F3F3F3;
     width: 250px;
-    margin: 0 20px 20px;
+    margin: 0 10px 10px;
     position: relative;
 }
 
 .FimboContainer__item__name {
-    padding: 20px 20px 0 20px;
-    height: 70px;
+    padding: 15px 20px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .FimboContainer__item__name_a{
     text-decoration: none;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .FimboContainer__item__name_text{
@@ -317,7 +322,7 @@ body {
 
 .FimboContainer__item__tracks {
     overflow-y: scroll;
-    max-height: 130px;
+    max-height: 105px;
     overflow-x: hidden;
 }
 
@@ -504,11 +509,11 @@ body {
     0 0 #9ECCE0 inset;
 }
 
-.FimboContainer__item__basket__cont {
+.FimboContainer__item__pos__cont {
     width: 100%;
     padding: 0 20px;
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     justify-content: space-between;
 }
 
@@ -748,7 +753,7 @@ body {
 @media screen and (max-width: 1200px) {
     .FimboContainer__item {
         width: 220px;
-        margin: 0 5px 20px;
+        margin: 0 5px 10px;
     }
 
     .FimboContainer, .FimboSize__container {
@@ -767,12 +772,11 @@ body {
 @media screen and (max-width: 960px) {
 
     .FimboContainer__item {
-        margin: 0 20px 20px;
         width: 250px;
     }
 
     .FimboContainer{
-        width: 580px;
+        width: 520px;
         margin-top: 30px;
     }
     .FimboSize__container{
@@ -789,6 +793,11 @@ body {
 }
 
 @media screen and (max-width: 640px) {
+
+    .FimboContainer__item__tracks {
+        max-height: 95px;
+    }
+
     .FimboContainer__item__tracks__item{
         padding: 3px 6px;
     }
@@ -804,18 +813,18 @@ body {
 
     .FimboContainer{
         width: 100%;
+        justify-content: center;
     }
 
     .FimboContainer__item__name {
-        padding: 12px 12px 0;
-        font-size: 18px;
+        padding: 12px 8px 5px;
     }
 
     .FimboContainer__item__tracks__item__name {
         font-size: 12px;
     }
 
-    .FimboContainer__item__basket__cont {
+    .FimboContainer__item__pos__cont {
         padding: 0 12px;
     }
 
@@ -829,8 +838,8 @@ body {
     }
 
     .FimboContainer__item {
-        width: calc(50% - 20px);
-        margin: 0 10px 10px;
+        width: calc(50% - 10px);
+        max-width: 220px;
     }
 }
 

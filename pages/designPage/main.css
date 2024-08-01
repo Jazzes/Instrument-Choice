@@ -125,6 +125,9 @@ body {
     font-size: 15px;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    color: black !important;
+    text-decoration: 1px solid underline black !important;
 }
 
 .progressBarr__row__item__circ {
@@ -232,14 +235,16 @@ body {
 }
 
 .FimboContainer__item__name {
-    padding: 20px 20px 0 20px;
-    height: 70px;
+    padding: 15px 20px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .FimboContainer__item__name_a {
     text-decoration: none;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .FimboContainer__item__name_text {
@@ -257,11 +262,12 @@ body {
     margin-top: 5px;
     line-height: 0;
     position: relative;
-    padding: 0 20px;
+    padding: 0 30px;
     width: 100%;
 }
 
 .FimboContainer__item__ImgCont {
+    position: relative;
     line-height: 0;
     width: 100%;
 }
@@ -306,7 +312,7 @@ body {
 .FimboContainer__item__img_count {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 .FimboTin__video {
@@ -349,13 +355,13 @@ body {
     position: absolute;
 }
 
-.FimboContainer__item__basket__cont {
+.FimboContainer__item__pos__cont {
+    margin-top: 8px;
     width: 100%;
     padding: 0 20px;
     display: flex;
-    justify-content: flex-start;
-    position: relative;
-    top: -20px;
+    margin-bottom: 10px;
+    justify-content: space-between;
 }
 
 .FimboContainer__item__basket, .FimboTin__button {
@@ -394,16 +400,13 @@ body {
 }
 
 .FimboContainer__item__like {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    position: absolute;
-    top: 20px;
-    right: 20px;
     transition: .3s linear all;
     box-shadow: 0 0 10px #9ECCE0,
     0 0 #9ECCE0 inset;
@@ -533,14 +536,18 @@ body {
     cursor: pointer;
     transition: .3s linear all;
     z-index: 2;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2),
+            0 0 0 0 #d0d0d0 inset;
 }
 
 .FimboTin__crossB:hover, .bigImbCross:hover {
-    box-shadow: 0 0 5px #d0d0d0 inset;
+    box-shadow:  0 0 0 0 rgba(0, 0, 0, 0.2),
+    0 0 5px #d0d0d0 inset;
 }
 
 .FimboTin__crossB:active, .bigImbCross:active {
-    box-shadow: 0 0 5px #9b9b9b inset;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2),
+    0 0 5px #9b9b9b inset;
 }
 
 .FimboTin__cir {
@@ -552,11 +559,11 @@ body {
 }
 
 .FimboTin__cir_top {
-    top: -200px;
+    top: -240px;
 }
 
 .FimboTin__cir_bot {
-    bottom: -200px;
+    bottom: -170px;
 }
 
 .redSwipeBack{
@@ -613,7 +620,7 @@ body {
 
 .FimboTin__name {
     font-weight: 500;
-    font-size: 32px;
+    font-size: 24px;
     width: 100%;
     text-align: center;
     margin-top: 10px;
@@ -635,6 +642,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
 }
 
 .FimboTin__plashka_i_selected {
@@ -666,41 +674,46 @@ body {
     object-fit: contain;
 }
 
+.HAndSwitch{
+    display: flex;
+    flex-direction: column;
+}
+
 .switch-btnFC {
-    position: fixed;
-    left: 50%;
-    bottom: 10px;
-    display: inline-block;
-    width: 72px;
-    height: 38px;
-    transform: translateX(calc(-50% + 140px));
+    position: relative;
+    display: flex;
+    justify-content: space-between;
     border-radius: 19px;
-    background: #bfbfbf;
-    z-index: 6;
-    margin: 0;
-    padding: 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    background: #e5e5e5;
     border: none;
     cursor: pointer;
     transition-duration: 300ms;
-    box-shadow: 0 0 5px lightgray;
+    font-size: 16px;
 }
 .switch-btnFC::after {
     content: "";
-    height: 32px;
-    width: 32px;
+    height: calc(100% - 6px);
+    width: 50%;
     border-radius: 17px;
-    background: #fff;
+    background: white;
     top: 3px;
     left: 3px;
     transition-duration: 300ms;
     position: absolute;
-    z-index: 7;
-}
-.switch-onFC {
-    background: #118c4e;
 }
 .switch-onFC::after {
-    left: 37px;
+    left: calc(50% - 3px);
+}
+.switchFText{
+    width: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    z-index: 1;
+    white-space: nowrap;
 }
 
 .nameOfPageC {
@@ -875,9 +888,6 @@ body {
         width: 100%;
     }
 
-    .FimboContainer__item__name_a {
-        font-size: 16px;
-    }
 
     .FimboContainer__item__name {
         padding: 12px 12px 0;
@@ -888,8 +898,8 @@ body {
         font-size: 12px;
     }
 
-    .FimboContainer__item__basket__cont {
-        padding: 0 8px;
+    .FimboContainer__item__pos__cont {
+        padding: 0 12px;
     }
 
     .FimboContainer__item__c {
@@ -901,11 +911,3 @@ body {
         margin: 0 10px 10px;
     }
 }
-
-@media screen and (max-width: 400px) {
-    .switch-btnFC{
-        bottom: 65px;
-        transform: translateX(calc(-50% + 100px));
-    }
-}
-

@@ -1,4 +1,5 @@
-const url = "https://admin.fimbo.ru"
+const url = "http://localhost:5005"
+// const url = "https://admin.fimbo.ru"
 
 const xmlnsPath = "http://www.w3.org/2000/svg"
 
@@ -308,8 +309,8 @@ class ProgressBar {
             }
         }
 
-        if (this.prog === 4){
-            this.textNext.textContent = "Завершить"
+        if (this.prog === 4) {
+            this.textNext.textContent = "К результатам"
         }
 
         this.changeCifra()
@@ -345,16 +346,16 @@ class ProgressBar {
         }
     }
 
-    addProg(){
+    addProg() {
         ++this.prog
         this.changeCifra()
         if (this.prog === 4)
-            this.textNext.textContent = "Завершить"
+            this.textNext.textContent = "К результатам"
         else
             this.textNext.textContent = "Продолжить"
     }
 
-    delProg(){
+    delProg() {
         --this.prog
         this.changeCifra()
         this.textNext.textContent = "К следующему тесту"
@@ -682,15 +683,16 @@ class Listeners {
                     })
 
                     const delInd = lessonLikes.findIndex((ent) => ent.lesson_id === ids)
+                    lessonLikes.splice(delInd, 1)
 
                     fetc.setLike(ids, "lesson", 1).then(() => {
-                        lessonLikes.splice(delInd, 1)
                         InitProgress.checkProg()
                     }).catch(() => {
                         http.showError()
                         document.querySelectorAll(`.HB_${ids}`).forEach((ent) => {
                             ent.classList.add("button__like__active")
                         })
+                        lessonLikes.push({lesson_id: ids})
                     })
 
                 } else {
@@ -728,15 +730,15 @@ class Listeners {
                     document.querySelectorAll(`.HB_${ids}`).forEach((ent) => {
                         ent.classList.add("button__like__active")
                     })
-
+                    lessonLikes.push({lesson_id: ids})
                     fetc.setLike(ids, "lesson", 1).then(() => {
-                        lessonLikes.push({lesson_id: ids})
                         InitProgress.checkProg()
                     }).catch(() => {
                         http.showError()
                         document.querySelectorAll(`.HB_${ids}`).forEach((ent) => {
                             ent.classList.remove("button__like__active")
                         })
+                        lessonLikes.splice(lessonLikes.findIndex(ent => ent.lesson_id === ids), 1)
                     })
                 } else {
 

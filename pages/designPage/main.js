@@ -1,4 +1,6 @@
-const url = "https://admin.fimbo.ru"
+const url = "http://localhost:5005"
+// const url = "https://admin.fimbo.ru"
+
 
 const xmlnsPath = "http://www.w3.org/2000/svg"
 
@@ -104,7 +106,7 @@ class Fetches {
         return p
     }
 
-    async setLike(id, type, block) {
+    async setLike(id, type, block, like) {
         let lt = await (await fetch(`${url}/api/tUmrT/shceO`, {
             headers: {
                 "Content-Type": "application/json",
@@ -112,7 +114,7 @@ class Fetches {
             },
             method: "POST",
             body: JSON.stringify({
-                iPHHRPme: id, fAOUSyT: block, ksOxXXWwF: type
+                iPHHRPme: id, fAOUSyT: block, ksOxXXWwF: type, YARcxwU: like
             })
         })).json()
         const s = 909 - 823 < 909 - 754 ? 6 + (888 - 823 > 10 ? 677 : 42) : String("2") + "9"
@@ -293,8 +295,8 @@ class ProgressBar {
             }
         }
 
-        if (this.prog === 4){
-            this.textNext.textContent = "Завершить"
+        if (this.prog === 4) {
+            this.textNext.textContent = "К результатам"
         }
 
         this.changeCifra()
@@ -330,16 +332,16 @@ class ProgressBar {
         }
     }
 
-    addProg(){
+    addProg() {
         ++this.prog
         this.changeCifra()
         if (this.prog === 4)
-            this.textNext.textContent = "Завершить"
+            this.textNext.textContent = "К результатам"
         else
             this.textNext.textContent = "Продолжить"
     }
 
-    delProg(){
+    delProg() {
         --this.prog
         this.changeCifra()
         this.textNext.textContent = "К следующему тесту"
@@ -481,7 +483,7 @@ class Actions {
                 imgs.push({path: e.preview, type: "video", pathV: e.path})
         })
 
-        document.getElementById("FimNameTFake").innerHTML = "Фимбо " + fimbos[ind].mOFICyXDAMTxQcbr
+        document.getElementById("FimNameTFake").innerHTML = fimbos[ind].mOFICyXDAMTxQcbr
         const img = document.getElementById("FimboImgTinFake")
         img.src = `${HOST}/files/cover/${fimbos[ind].uMBykHYhkxkbOC}/${imgs[0].path}`
 
@@ -504,7 +506,13 @@ class Actions {
     }
 
     checkHowManyLikes() {
-        return designLikes.length !== fimbos.length;
+        let lengthLikes = 0
+        designLikes.forEach(ent => {
+            if (ent.item_like)
+                ++lengthLikes
+        })
+
+        return lengthLikes !== fimbos.length;
     }
 
     changeInfoTin(ind) {
@@ -526,7 +534,7 @@ class Actions {
                     new_img.push({path: e.preview, type: "video", pathV: e.path})
             })
 
-            document.getElementById("FimNameT").innerHTML = "Фимбо " + fimbos[ind].mOFICyXDAMTxQcbr
+            document.getElementById("FimNameT").innerHTML = fimbos[ind].mOFICyXDAMTxQcbr
             const img = document.getElementById("FimboImgTin")
             img.src = `${HOST}/files/cover/${fimbos[ind].uMBykHYhkxkbOC}/${new_img[0].path}`
 
@@ -613,14 +621,29 @@ class Actions {
 
     colorHeart(id, type) {
         const el = document.getElementById(`HB_${id}`)
+        const elD = document.getElementById(`HBD_${id}`)
         if (type) {
             if (!el.classList.contains("button__like__active"))
                 el.classList.add("button__like__active")
+            if (elD.classList.contains("button__like__active"))
+                elD.classList.remove("button__like__active")
         } else {
             if (el.classList.contains("button__like__active"))
                 el.classList.remove("button__like__active")
+            if (!elD.classList.contains("button__like__active"))
+                elD.classList.add("button__like__active")
         }
 
+    }
+
+    countLikes() {
+        let lengthLikes = 0
+        designLikes.forEach(ent => {
+            if (ent.item_like)
+                ++lengthLikes
+        })
+
+        return lengthLikes
     }
 
 
@@ -791,15 +814,17 @@ class Listeners {
 
     }
 
-    lisLike(like, id) {
+    lisLike(like, otherB, id, likeType) {
         like.addEventListener("click", () => {
 
             if (like.classList.contains("button__like__active")) {
                 like.classList.remove("button__like__active")
-                const delInd = designLikes.findIndex((ent) => ent.fimbo_id === id)
-
-                fetc.setLike(id, "fimbo", 3).then(() => {
-                    designLikes.splice(delInd, 1)
+                if (!otherB.classList.contains("button__like__active")) {
+                    otherB.classList.add("button__like__active")
+                }
+                fetc.setLike(id, "fimbo", 3, likeType).then(() => {
+                    const Ind = designLikes.findIndex((ent) => ent.fimbo_id === id)
+                    designLikes[Ind].item_like = !likeType
                     InitProgress.checkProg()
                 }).catch(() => {
                     like.classList.add("button__like__active")
@@ -807,9 +832,16 @@ class Listeners {
                 })
             } else {
                 like.classList.add("button__like__active")
+                if (otherB.classList.contains("button__like__active")) {
+                    otherB.classList.remove("button__like__active")
+                }
 
-                fetc.setLike(id, "fimbo", 3).then(() => {
-                    designLikes.push({fimbo_id: id})
+                fetc.setLike(id, "fimbo", 3, likeType).then(() => {
+                    const Ind = designLikes.findIndex((ent) => ent.fimbo_id === id)
+                    if (Ind !== -1)
+                        designLikes[Ind].item_like = likeType
+                    else
+                        designLikes.push({fimbo_id: id, item_like: likeType})
                     InitProgress.checkProg()
                 }).catch(() => {
                     like.classList.remove("button__like__active")
@@ -831,19 +863,26 @@ class Listeners {
 
             item.style.animation = "TinDisLike .4s linear"
 
-            const delInd = designLikes.findIndex((ent) => ent.fimbo_id === fimbos[ind].koKSFvCjCYRrwA)
-            if (delInd !== -1) {
-                act.colorHeart(fimbos[ind].koKSFvCjCYRrwA, false)
+            const id = fimbos[ind].koKSFvCjCYRrwA
 
-                fetc.setLike(fimbos[ind].koKSFvCjCYRrwA, "fimbo", 3).then(() => {
-                    designLikes.splice(delInd, 1)
+            act.colorHeart(id, false)
+
+            const Ind = designLikes.findIndex((ent) => ent.fimbo_id === id)
+
+            if ((Ind === -1) || (designLikes[Ind].item_like)) {
+                fetc.setLike(id, "fimbo", 3, false).then(() => {
+                    if (Ind !== -1)
+                        designLikes[Ind].item_like = false
+                    else
+                        designLikes.push({fimbo_id: id, item_like: false})
+
                     InitProgress.checkProg()
                 }).catch(() => {
-                    act.colorHeart(fimbos[ind].koKSFvCjCYRrwA, true)
+                    act.colorHeart(id, true)
                     http.showError()
                 })
-
             }
+
 
             setTimeout(() => {
                 this.prevs.push(this.ind)
@@ -871,23 +910,29 @@ class Listeners {
         this.prevLis[2] = (e) => {
             e.stopPropagation()
 
-            if (designLikes.length >= fimbos.length - 1) {
+            if (act.countLikes() >= fimbos.length - 1) {
                 fake.style.display = "none"
             }
 
             item.style.animation = "TinLike .4s linear"
 
-            const isEl = designLikes.findIndex((ent) => ent.fimbo_id === fimbos[ind].koKSFvCjCYRrwA)
+            const id = fimbos[ind].koKSFvCjCYRrwA
 
-            if (isEl === -1) {
+            const Ind = designLikes.findIndex((ent) => ent.fimbo_id === fimbos[ind].koKSFvCjCYRrwA)
 
-                act.colorHeart(fimbos[ind].koKSFvCjCYRrwA, true)
+            if ((Ind === -1) || (designLikes[Ind].item_like === false)) {
 
-                fetc.setLike(fimbos[ind].koKSFvCjCYRrwA, "fimbo", 3).then(() => {
-                    designLikes.push({fimbo_id: fimbos[ind].koKSFvCjCYRrwA})
+                act.colorHeart(id, true)
+
+                fetc.setLike(id, "fimbo", 3, true).then(() => {
+                    if (Ind !== -1)
+                        designLikes[Ind].item_like = true
+                    else
+                        designLikes.push({fimbo_id: id, item_like: true})
+
                     InitProgress.checkProg()
                 }).catch(() => {
-                    act.colorHeart(fimbos[ind].koKSFvCjCYRrwA, false)
+                    act.colorHeart(id, false)
                     http.showError()
                 })
 
@@ -977,7 +1022,7 @@ class Listeners {
             const firstValue = e.clientX - rect.left
 
             const fake = document.getElementById("FimboTinItemFake")
-            if (designLikes.length >= fimbos.length - 1) {
+            if (act.countLikes() >= fimbos.length - 1) {
                 fake.style.display = "none"
             }
 
@@ -995,7 +1040,7 @@ class Listeners {
                 const val = percent / 100
                 const valAb = Math.abs(percent / 100)
 
-                if (percent > 0){
+                if (percent > 0) {
                     greenBack.style.opacity = `${valAb}`
                     redBack.style.opacity = "0"
                 } else if (percent < 0) {
@@ -1014,32 +1059,40 @@ class Listeners {
 
                 Par.style.transition = ".2s linear all"
                 if (value > 100 || value < -100) {
-                    const isEl = designLikes.findIndex((ent) => ent.fimbo_id === fimbos[this.ind].koKSFvCjCYRrwA)
+                    const id = fimbos[this.ind].koKSFvCjCYRrwA
+
+                    const isEl = designLikes.findIndex((ent) => ent.fimbo_id === id)
 
                     if (value > 100) {
                         Par.style.transform = 'rotate(7deg) translateX(220px) translateY(20px)'
-                        if (isEl === -1) {
-                            act.colorHeart(fimbos[this.ind].koKSFvCjCYRrwA, true)
+                        if (isEl === -1 || (designLikes[isEl].item_like === false)) {
+                            act.colorHeart(id, true)
 
-                            fetc.setLike(fimbos[this.ind].koKSFvCjCYRrwA, "fimbo", 3).then(() => {
-                                designLikes.push({fimbo_id: fimbos[this.ind].koKSFvCjCYRrwA})
+                            fetc.setLike(id, "fimbo", 3, true).then(() => {
+                                if (isEl !== -1)
+                                    designLikes[isEl].item_like = true
+                                else
+                                    designLikes.push({fimbo_id: id, item_like: true})
                                 InitProgress.checkProg()
                             }).catch(() => {
-                                act.colorHeart(fimbos[this.ind].koKSFvCjCYRrwA, false)
+                                act.colorHeart(id, false)
                                 http.showError()
                             })
 
                         }
                     } else {
                         Par.style.transform = 'rotate(-7deg) translateX(-220px) translateY(20px)'
-                        if (isEl !== -1) {
-                            act.colorHeart(fimbos[this.ind].koKSFvCjCYRrwA, false)
+                        if ((isEl === -1) || (designLikes[isEl].item_like === true)) {
+                            act.colorHeart(id, false)
 
-                            fetc.setLike(fimbos[this.ind].koKSFvCjCYRrwA, "fimbo", 3).then(() => {
-                                designLikes.splice(isEl, 1)
+                            fetc.setLike(id, "fimbo", 3, false).then(() => {
+                                if (isEl !== -1)
+                                    designLikes[isEl].item_like = false
+                                else
+                                    designLikes.push({fimbo_id: id, item_like: false})
                                 InitProgress.checkProg()
                             }).catch(() => {
-                                act.colorHeart(fimbos[this.ind].koKSFvCjCYRrwA, true)
+                                act.colorHeart(id, true)
                                 http.showError()
                             })
 
@@ -1088,7 +1141,7 @@ class Listeners {
             const firstValue = event.touches[0].clientX - rect.left
 
             const fake = document.getElementById("FimboTinItemFake")
-            if (designLikes.length >= fimbos.length - 1) {
+            if (act.countLikes() >= fimbos.length - 1) {
                 fake.style.display = "none"
             }
             const touchMoveHandler = (e) => {
@@ -1105,7 +1158,7 @@ class Listeners {
                 const val = percent / 100
                 const valAb = Math.abs(percent / 100)
 
-                if (percent > 0){
+                if (percent > 0) {
                     greenBack.style.opacity = `${valAb}`
                     redBack.style.opacity = "0"
                 } else if (percent < 0) {
@@ -1123,31 +1176,39 @@ class Listeners {
 
                 Par.style.transition = ".2s linear all"
                 if (value > 100 || value < -100) {
-                    const isEl = designLikes.findIndex((ent) => ent.fimbo_id === fimbos[this.ind].koKSFvCjCYRrwA)
+                    const id = fimbos[this.ind].koKSFvCjCYRrwA
+
+                    const isEl = designLikes.findIndex((ent) => ent.fimbo_id === id)
 
                     if (value > 100) {
                         Par.style.transform = 'rotate(7deg) translateX(220px) translateY(20px)'
-                        if (isEl === -1) {
-                            act.colorHeart(fimbos[this.ind].koKSFvCjCYRrwA, true)
+                        if ((isEl === -1) || (designLikes[isEl].item_like === false)) {
+                            act.colorHeart(id, true)
 
-                            fetc.setLike(fimbos[this.ind].koKSFvCjCYRrwA, "fimbo", 3).then(() => {
-                                designLikes.push({fimbo_id: fimbos[this.ind].koKSFvCjCYRrwA})
+                            fetc.setLike(id, "fimbo", 3, true).then(() => {
+                                if (isEl !== -1)
+                                    designLikes[isEl].item_like = true
+                                else
+                                    designLikes.push({fimbo_id: id, item_like: true})
                                 InitProgress.checkProg()
                             }).catch(() => {
-                                act.colorHeart(fimbos[this.ind].koKSFvCjCYRrwA, false)
+                                act.colorHeart(id, false)
                                 http.showError()
                             })
                         }
                     } else {
                         Par.style.transform = 'rotate(-7deg) translateX(-220px) translateY(20px)'
-                        if (isEl !== -1) {
-                            act.colorHeart(fimbos[this.ind].koKSFvCjCYRrwA, false)
+                        if ((isEl === -1) || (designLikes[isEl].item_like === true)) {
+                            act.colorHeart(id, false)
 
-                            fetc.setLike(fimbos[this.ind].koKSFvCjCYRrwA, "fimbo", 3).then(() => {
-                                designLikes.splice(isEl, 1)
+                            fetc.setLike(id, "fimbo", 3, false).then(() => {
+                                if (isEl !== -1)
+                                    designLikes[isEl].item_like = false
+                                else
+                                    designLikes.push({fimbo_id: id, item_like: false})
                                 InitProgress.checkProg()
                             }).catch(() => {
-                                act.colorHeart(fimbos[this.ind].koKSFvCjCYRrwA, true)
+                                act.colorHeart(id, true)
                                 http.showError()
                             })
                         }
@@ -1333,18 +1394,29 @@ class Listeners {
 const Listener = new Listeners()
 
 class Elements {
-    createName(nam, url) {
+    createNameAndBasket(nam, url) {
         const block = document.createElement('div')
         block.classList.add("FimboContainer__item__name")
         const name = document.createElement('a')
         name.classList.add("FimboContainer__item__name_a")
         const text = document.createElement('div')
-        text.innerHTML = `Фимбо <br/>${nam}`
+        text.innerHTML = `${nam}`
         text.classList.add("FimboContainer__item__name_text")
         name.href = url
         name.append(text)
 
-        block.append(name)
+
+        const basketCont = document.createElement('a')
+        basketCont.href = url
+        basketCont.classList.add("FimboContainer__item__basket")
+        const basket = document.createElementNS(xmlnsPath, 'svg')
+        basket.setAttribute('width', "18")
+        basket.setAttribute('height', "20")
+        basket.setAttribute('viewBox', "0 0 16 18")
+        basket.innerHTML = document.getElementById("cartSVG").innerHTML
+        basketCont.append(basket)
+
+        block.append(name, basketCont)
         return block
     }
 
@@ -1446,45 +1518,47 @@ class Elements {
         return container
     }
 
-    createBasket(url) {
-        const basketRow = document.createElement('div')
-        basketRow.classList.add('FimboContainer__item__basket__cont')
+    createLikes(id) {
+        const likesRow = document.createElement('div')
+        likesRow.classList.add('FimboContainer__item__pos__cont')
 
-        const basketCont = document.createElement('a')
-        basketCont.href = url
-        basketCont.classList.add("FimboContainer__item__basket")
-        const basket = document.createElementNS(xmlnsPath, 'svg')
-        basket.setAttribute('width', "18")
-        basket.setAttribute('height', "20")
-        basket.setAttribute('viewBox', "0 0 16 18")
-        basket.innerHTML = document.getElementById("cartSVG").innerHTML
-        basketCont.append(basket)
+        const LikeDis = document.createElement('div')
+        LikeDis.classList.add("FimboContainer__item__like")
 
-        basketRow.append(basketCont)
+        const heartDis = document.createElementNS(xmlnsPath, 'svg')
+        heartDis.innerHTML = document.getElementById("heartDisSVG").innerHTML
+        heartDis.setAttribute('width', "22")
+        heartDis.setAttribute('height', "19")
+        heartDis.setAttribute('viewBox', "0 0 22 19")
+        LikeDis.append(heartDis)
+        LikeDis.id = "HBD_" + id
 
-        return basketRow
-    }
-
-    createLike(id) {
         const Like = document.createElement('div')
         Like.classList.add("FimboContainer__item__like")
 
         const like = document.createElementNS(xmlnsPath, 'svg')
-        like.setAttribute('width', "26")
-        like.setAttribute('height', "23")
+        like.setAttribute('width', "22")
+        like.setAttribute('height', "22")
         like.setAttribute('viewBox', "0 0 26 23")
         like.innerHTML = document.getElementById("heartSVG").innerHTML
         Like.append(like)
         Like.id = "HB_" + id
 
         const indC = designLikes.findIndex((entG) => entG.fimbo_id === id)
+
         if (indC !== -1) {
-            Like.classList.add("button__like__active")
+            if (designLikes[indC].item_like)
+                Like.classList.add("button__like__active")
+            else
+                LikeDis.classList.add("button__like__active")
         }
 
-        Listener.lisLike(Like, id)
+        Listener.lisLike(LikeDis, Like, id, false)
+        Listener.lisLike(Like, LikeDis, id, true)
 
-        return Like
+        likesRow.append(LikeDis, Like)
+
+        return likesRow
     }
 
 }
@@ -1502,17 +1576,14 @@ const createFimbos = async () => {
         cont.classList.add("FimboContainer__item")
         cont.id = 'fimCont' + ent.koKSFvCjCYRrwA
 
-        const name = El.createName(ent.mOFICyXDAMTxQcbr, ent.WAFWANDViyJl)
+        const name = El.createNameAndBasket(ent.mOFICyXDAMTxQcbr, ent.WAFWANDViyJl)
 
         const img = El.createImg(ent.uMBykHYhkxkbOC, ent.pEPCppRIOdbowR,
             ent.GIFJootWbE, ent.WKTrbxdyQE, ent.uGiAW, index)
 
-        const basket = El.createBasket(ent.WAFWANDViyJl)
+        const likes = El.createLikes(ent.koKSFvCjCYRrwA)
 
-
-        const like = El.createLike(ent.koKSFvCjCYRrwA)
-
-        cont.append(name, img, basket, like)
+        cont.append(name, img, likes)
 
         container.append(cont)
     })

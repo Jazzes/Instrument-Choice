@@ -1,4 +1,5 @@
-const url = "https://admin.fimbo.ru"
+const url = "http://localhost:5005"
+// const url = "https://admin.fimbo.ru"
 
 const xmlnsPath = "http://www.w3.org/2000/svg"
 
@@ -188,18 +189,18 @@ class Elements {
             return svg
         }
 
-        if (designLikes.length > 0){
-            document.querySelector(".SquareProg1").append(createMark())
-        }
-        if(soundLikes.length > 0){
-            document.querySelector(".SquareProg2").append(createMark())
-        }
-        if (lessonLikes.length > 0){
-            document.querySelector(".SquareProg3").append(createMark())
-        }
-        if (soulLikes.length === 3){
-            document.querySelector(".SquareProg4").append(createMark())
-        }
+        // if (designLikes.length > 0){
+        //     document.querySelector(".SquareProg1").append(createMark())
+        // }
+        // if(soundLikes.length > 0){
+        //     document.querySelector(".SquareProg2").append(createMark())
+        // }
+        // if (lessonLikes.length > 0){
+        //     document.querySelector(".SquareProg3").append(createMark())
+        // }
+        // if (soulLikes.length === 3){
+        //     document.querySelector(".SquareProg4").append(createMark())
+        // }
     }
 
      showFimbos(fimbos){

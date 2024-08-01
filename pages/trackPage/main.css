@@ -122,6 +122,9 @@ body{
     font-size: 15px;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    color: black !important;
+    text-decoration: 1px solid underline black !important;
 }
 
 .progressBarr__row__item__circ {

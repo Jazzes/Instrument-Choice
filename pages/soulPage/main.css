@@ -124,6 +124,9 @@ body {
     font-size: 15px;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    color: black !important;
+    text-decoration: 1px solid underline black !important;
 }
 
 .progressBarr__row__item__circ {
@@ -217,9 +220,7 @@ body {
 .FimboContainer {
     display: flex;
     width: 580px;
-    margin-top: 50px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    border-radius: 30px;
+    margin-top: 30px;
     flex-direction: column;
     font-size: 20px;
 }
@@ -230,19 +231,18 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    border-radius: 20px;
+    margin: 10px 0;
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.1);
 }
 .FimboContainer__content__temp{
     background: #F6F7FF;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
 }
 .FimboContainer__content__horo{
     background: #F9F3FF;
 }
 .FimboContainer__content__col{
     background: #F1F8FF;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
 }
 
 .FimboContainer__content__h {
@@ -269,6 +269,11 @@ body {
     align-items: center;
     margin: 10px 0;
     cursor: pointer;
+    transition: .3s linear all;
+}
+
+.FimboContainer__content__ans__item:hover, .FimboContainer__content__ans__item__c:hover{
+    color: gray;
 }
 
 .FimboContainer__content__ans__item__col{
@@ -368,12 +373,12 @@ body {
 }
 
 .FimboContainer__content__list{
-    display: flex;
+    opacity: 0;
     flex-direction: column;
     width: 100%;
     align-items: center;
     transform: translateY(calc(-100% - 50px));
-    transition: .3s linear all;
+    transition: .3s linear transform;
     max-height: 270px;
     overflow-y: scroll;
     border: 1px solid lightgrey;
@@ -381,6 +386,7 @@ body {
 
 .FimboContainer__content__list__active{
     transform: translateY(0);
+    opacity: 1;
 }
 
 .FimboContainer__content__list__item{
@@ -526,10 +532,6 @@ body {
 }
 
 @media screen and (max-width: 960px) {
-
-    .FimboContainer {
-        margin-top: 30px;
-    }
 
 }
 

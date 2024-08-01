@@ -1,10 +1,13 @@
-const url = "https://admin.fimbo.ru"
+const url = "http://localhost:5005"
+// const url = "https://admin.fimbo.ru"
 
 let HOST
 
 let counter = 0
 
 let soulOptionsH
+
+let soulOptions
 
 let designLikes = [], soundLikes = [], lessonLikes = [], soulLikes = []
 
@@ -287,8 +290,8 @@ class ProgressBar {
             }
         }
 
-        if (this.prog === 4){
-            this.textNext.textContent = "Завершить"
+        if (this.prog === 4) {
+            this.textNext.textContent = "К результатам"
         }
 
         this.changeCifra()
@@ -324,16 +327,16 @@ class ProgressBar {
         }
     }
 
-    addProg(){
+    addProg() {
         ++this.prog
         this.changeCifra()
         if (this.prog === 4)
-            this.textNext.textContent = "Завершить"
+            this.textNext.textContent = "К результатам"
         else
             this.textNext.textContent = "Продолжить"
     }
 
-    delProg(){
+    delProg() {
         --this.prog
         this.changeCifra()
         this.textNext.textContent = "К следующему тесту"
@@ -495,6 +498,27 @@ class Listeners {
         this.lisChooseH()
         this.lisChooseDateM()
         this.lisChooseDateD()
+        this.lisChooseIDontCate()
+    }
+
+    lisChooseIDontCate(){
+        document.getElementById("nextProgA").addEventListener("click", () => {
+            if ((designLikes.length > 0) && (soundLikes.length > 0) && (lessonLikes.length > 0)) {
+                const temperament = soulLikes.findIndex((ent) => ent.block === 1)
+                const horoscope = soulLikes.findIndex((ent) => ent.block === 2)
+                const color = soulLikes.findIndex((ent) => ent.block === 3)
+
+                if (temperament === -1) {
+                    fetc.setLike(soulOptions.temper.find((ent) => ent.tMvlJP === "none").koKSFvCjCYRrwA, "soul", 1)
+                }
+                if (horoscope === -1) {
+                    fetc.setLike(soulOptions.horo.find((ent) => ent.tMvlJP === "none").koKSFvCjCYRrwA, "soul", 2)
+                }
+                if (color === -1) {
+                    fetc.setLike(soulOptions.col.find((ent) => ent.tMvlJP === "none").koKSFvCjCYRrwA, "soul", 3)
+                }
+            }
+        })
     }
 
     lisChooseDateM() {
@@ -545,8 +569,7 @@ class Listeners {
             this.selectedMonth = el.getAttribute("data-NumericM")
 
             if (other.textContent !== "День") {
-                const resp = acts.getZodiacSign(this.selectedDay, this.selectedMonth)
-                placeZodiac.textContent = resp
+                placeZodiac.textContent = acts.getZodiacSign(this.selectedDay, this.selectedMonth)
             }
         })
 
@@ -852,7 +875,7 @@ const start = async () => {
 
     InitClient.tokenInit().then(async () => {
         HOST = await fetc.fetchHos()
-        const soulOptions = await fetc.fetchSoulOpt()
+        soulOptions = await fetc.fetchSoulOpt()
 
         El.createAnswersTemp(soulOptions.temper)
         El.createAnswersHoroscope(soulOptions.horo)

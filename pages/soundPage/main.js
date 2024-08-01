@@ -1,4 +1,5 @@
-const url = "https://admin.fimbo.ru"
+const url = "http://localhost:5005"
+// const url = "https://admin.fimbo.ru"
 
 const xmlnsPath = "http://www.w3.org/2000/svg"
 
@@ -196,7 +197,7 @@ class Fetches {
         return p
     }
 
-    async setLike(id, type, block) {
+    async setLike(id, type, block, like) {
         let lt = await (await fetch(`${url}/api/tUmrT/shceO`, {
             headers: {
                 "Content-Type": "application/json",
@@ -204,7 +205,7 @@ class Fetches {
             },
             method: "POST",
             body: JSON.stringify({
-                iPHHRPme: id, fAOUSyT: block, ksOxXXWwF: type
+                iPHHRPme: id, fAOUSyT: block, ksOxXXWwF: type, YARcxwU: like
             })
         })).json()
         const s = 909 - 823 < 909 - 754 ? 6 + (888 - 823 > 10 ? 677 : 42) : String("2") + "9"
@@ -386,8 +387,8 @@ class ProgressBar {
             }
         }
 
-        if (this.prog === 4){
-            this.textNext.textContent = "Завершить"
+        if (this.prog === 4) {
+            this.textNext.textContent = "К результатам"
         }
 
         this.changeCifra()
@@ -423,16 +424,16 @@ class ProgressBar {
         }
     }
 
-    addProg(){
+    addProg() {
         ++this.prog
         this.changeCifra()
         if (this.prog === 4)
-            this.textNext.textContent = "Завершить"
+            this.textNext.textContent = "К результатам"
         else
             this.textNext.textContent = "Продолжить"
     }
 
-    delProg(){
+    delProg() {
         --this.prog
         this.changeCifra()
         this.textNext.textContent = "К следующему тесту"
@@ -941,32 +942,42 @@ class Listeners {
         })
     }
 
-    lisLike(like, id) {
+    lisLike(like, otherB, id, likeType) {
         like.addEventListener("click", () => {
 
             if (like.classList.contains("button__like__active")) {
-                const delInd = soundLikes.findIndex((ent) => ent.fimbo_id === id)
-
                 like.classList.remove("button__like__active")
+                if (!otherB.classList.contains("button__like__active")){
+                    otherB.classList.add("button__like__active")
+                }
 
-                fetc.setLike(id, "fimbo", 2).then(() => {
-                    soundLikes.splice(delInd, 1)
+                fetc.setLike(id, "fimbo", 2, likeType).then(() => {
+                    const Ind = soundLikes.findIndex((ent) => ent.fimbo_id === id)
+                    soundLikes[Ind].item_like = !likeType
                     InitProgress.checkProg()
                 }).catch(() => {
-                    like.classList.add("button__like__active")
                     http.showError()
                 })
-            } else {
 
+            } else {
                 like.classList.add("button__like__active")
 
-                fetc.setLike(id, "fimbo", 2).then(() => {
-                    soundLikes.push({fimbo_id: id})
+                if (otherB.classList.contains("button__like__active")){
+                    otherB.classList.remove("button__like__active")
+                }
+
+                fetc.setLike(id, "fimbo", 2, likeType).then(() => {
+                    const Ind = soundLikes.findIndex((ent) => ent.fimbo_id === id)
+
+                    if (Ind !== -1)
+                        soundLikes[Ind].item_like = likeType
+                    else
+                        soundLikes.push({fimbo_id: id, item_like: likeType})
                     InitProgress.checkProg()
                 }).catch(() => {
-                    like.classList.remove("button__like__active")
                     http.showError()
                 })
+
             }
         })
     }
@@ -1193,7 +1204,7 @@ class Actions {
 const actions = new Actions()
 
 class Elements {
-    createName(nam, url) {
+    createNameAndBasket(nam, url) {
         const block = document.createElement('div')
         block.classList.add("FimboContainer__item__name")
         const name = document.createElement('a')
@@ -1204,7 +1215,17 @@ class Elements {
         name.href = url
         name.append(text)
 
-        block.append(name)
+        const basketCont = document.createElement('a')
+        basketCont.href = url
+        basketCont.classList.add("FimboContainer__item__basket")
+        const basket = document.createElementNS(xmlnsPath, 'svg')
+        basket.setAttribute('width', "18")
+        basket.setAttribute('height', "20")
+        basket.setAttribute('viewBox', "0 0 16 18")
+        basket.innerHTML = document.getElementById("cartSVG").innerHTML
+        basketCont.append(basket)
+
+        block.append(name, basketCont)
         return block
     }
 
@@ -1257,25 +1278,45 @@ class Elements {
         return container
     }
 
-    createBasket(url, id) {
-        const basketRow = document.createElement('div')
-        basketRow.classList.add('FimboContainer__item__basket__cont')
+    createLikes(id) {
+        const likesRow = document.createElement('div')
+        likesRow.classList.add('FimboContainer__item__pos__cont')
 
-        const basketCont = document.createElement('a')
-        basketCont.href = url
-        basketCont.classList.add("FimboContainer__item__basket")
-        const basket = document.createElementNS(xmlnsPath, 'svg')
-        basket.setAttribute('width', "18")
-        basket.setAttribute('height', "20")
-        basket.setAttribute('viewBox', "0 0 16 18")
-        basket.innerHTML = document.getElementById("cartSVG").innerHTML
-        basketCont.append(basket)
+        const heartContDis = document.createElement('div')
+        heartContDis.classList.add("FimboContainer__item__like")
 
-        const like = this.createLike(id)
+        const heartDis = document.createElementNS(xmlnsPath, 'svg')
+        heartDis.innerHTML = document.getElementById("heartDisSVG").innerHTML
+        heartDis.setAttribute('width', "22")
+        heartDis.setAttribute('height', "19")
+        heartDis.setAttribute('viewBox', "0 0 22 19")
+        heartContDis.append(heartDis)
 
-        basketRow.append(like, basketCont)
+        const heartCont = document.createElement('div')
+        heartCont.classList.add("FimboContainer__item__like")
 
-        return basketRow
+        const heart = document.createElementNS(xmlnsPath, 'svg')
+        heart.innerHTML = document.getElementById("heartSVG").innerHTML
+        heart.setAttribute('width', "22")
+        heart.setAttribute('height', "22")
+        heart.setAttribute('viewBox', "0 0 26 23")
+        heartCont.append(heart)
+
+        Listener.lisLike(heartContDis, heartCont, id, false)
+        Listener.lisLike(heartCont, heartContDis, id, true)
+
+        const indC = soundLikes.findIndex((entG) => entG.fimbo_id === id)
+
+        if (indC !== -1) {
+            if (soundLikes[indC].item_like)
+                heartCont.classList.add("button__like__active")
+            else
+                heartContDis.classList.add("button__like__active")
+        }
+
+        likesRow.append(heartContDis, heartCont)
+
+        return likesRow
     }
 
     createAudio(el) {
@@ -1309,26 +1350,6 @@ class Elements {
         return audio
     }
 
-    createLike(id){
-        const heartCont = document.createElement('div')
-        heartCont.classList.add("FimboContainer__item__like")
-
-        const heart = document.createElementNS(xmlnsPath, 'svg')
-        heart.innerHTML = document.getElementById("heartSVG").innerHTML
-        heart.setAttribute('width', "22")
-        heart.setAttribute('height', "22")
-        heart.setAttribute('viewBox', "0 0 26 23")
-        heartCont.append(heart)
-
-        Listener.lisLike(heartCont, id)
-
-        const indC = soundLikes.findIndex((entG) => entG.fimbo_id === id)
-        if (indC !== -1) {
-            heartCont.classList.add("button__like__active")
-        }
-
-        return heartCont
-    }
 
 }
 
@@ -1352,15 +1373,15 @@ const createFimbos = async () => {
         cont.classList.add("FimboContainer__item")
         cont.id = 'fimCont' + ent.koKSFvCjCYRrwA
 
-        const name = El.createName(ent.mOFICyXDAMTxQcbr, ent.WAFWANDViyJl)
+        const name = El.createNameAndBasket(ent.mOFICyXDAMTxQcbr, ent.WAFWANDViyJl)
 
         const tracks = El.createTracks(ent.tracks, ent.uMBykHYhkxkbOC, index)
 
         const img = El.createImg(ent.uMBykHYhkxkbOC, ent.pEPCppRIOdbowR)
 
-        const basket = El.createBasket(ent.WAFWANDViyJl, ent.koKSFvCjCYRrwA)
+        const likes = El.createLikes(ent.koKSFvCjCYRrwA)
 
-        cont.append(name, tracks, img, basket)
+        cont.append(name, tracks, img, likes)
 
         container.append(cont)
     })
