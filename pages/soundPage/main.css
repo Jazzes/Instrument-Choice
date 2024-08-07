@@ -213,73 +213,11 @@ body {
 
 }
 
-.FimboSize__container{
-    width: 1160px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.FimboSize__text{
-    font-size: 20px;
-    white-space: nowrap;
-    margin: 0;
-    font-weight: 400;
-}
-
-.FimboSize__img__container{
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    width: 35%;
-    justify-content: space-between;
-}
-
 .FimboSize__img__item__container{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-.FimboSize__img__item__text{
-    font-size: 16px;
-    text-align: center;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    pointer-events: none;
-}
-
-.FimboSize__img__item__container_22, .FimboSize__img__item__container_27, .FimboSize__img__item__container_32{
-    border-radius: 10px;
-    cursor: pointer;
-    transition: .3s all linear;
-}
-
-.FimboSize__img__item__container_22{
-    width: 25%;
-}
-
-.FimboSize__img__item__container_27{
-    width: 30%;
-}
-
-.FimboSize__img__item__container_32{
-    width: 35%;
-}
-
-.FimboSize__img__item__container_22:hover, .FimboSize__img__item__container_27:hover, .FimboSize__img__item__container_32:hover{
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-.FimboSize__img__chosen{
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.FimboSize__img__size22, .FimboSize__img__size27, .FimboSize__img__size32{
-    width: 100%;
-    pointer-events: none;
-    padding: 10px;
 }
 
 .FimboContainer {
@@ -659,6 +597,17 @@ body {
     z-index: 10001;
 }
 
+.nameOfPageC {
+    width: 100%;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 400;
+    color: black;
+    margin: 0;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
 .LLoader, .BackForMode {
     height: 150vh;
     width: 100vw;
@@ -756,7 +705,7 @@ body {
         margin: 0 5px 10px;
     }
 
-    .FimboContainer, .FimboSize__container {
+    .FimboContainer {
         width: 920px;
     }
 
@@ -765,6 +714,10 @@ body {
 @media screen and (max-width: 980px) {
     .RooT {
         margin-top: 0;
+    }
+    .nameOfPageC {
+        margin-top: 20px;
+        font-size: 30px;
     }
 
 }
@@ -779,16 +732,6 @@ body {
         width: 520px;
         margin-top: 30px;
     }
-    .FimboSize__container{
-        flex-direction: column;
-        width: 580px;
-        margin-top: 20px;
-    }
-    .FimboSize__img__container{
-        padding: 0;
-        margin-top: 20px;
-        width: 70%;
-    }
 
 }
 
@@ -802,18 +745,13 @@ body {
         padding: 3px 6px;
     }
 
-    .FimboSize__text{
-        font-size: 16px;
-    }
-
-    .FimboSize__container{
-        width: 100%;
-        padding: 0 20px;
-    }
-
     .FimboContainer{
         width: 100%;
         justify-content: center;
+    }
+
+    .nameOfPageC {
+        font-size: 24px;
     }
 
     .FimboContainer__item__name {

@@ -1,5 +1,7 @@
-const url = "http://localhost:5005"
 // const url = "https://admin.fimbo.ru"
+
+const url = "http://localhost:5005"
+
 
 
 const xmlnsPath = "http://www.w3.org/2000/svg"
@@ -185,6 +187,19 @@ class ProgressBar {
         const soulURL = this.url + "/fimbo-choice-soul"
 
         switch (this.type) {
+            case 0:
+                if (Design.length === 0) {
+                    linkToNext.href = desURL
+                } else if (Sound.length === 0) {
+                    linkToNext.href = soundURL
+                } else if (Lesson.length === 0) {
+                    linkToNext.href = trackURL
+                } else if (Soul.length < 3) {
+                    linkToNext.href = soulURL
+                } else {
+                    linkToNext.href = mainURL
+                }
+                break
             case 1:
                 if (Sound.length === 0) {
                     linkToNext.href = soundURL
@@ -295,7 +310,14 @@ class ProgressBar {
             }
         }
 
-        if (this.prog === 4) {
+        if (this.prog === 4 ||
+            (this.prog === 3 && (
+                (this.type === 1 && designLikes.length === 0) ||
+                (this.type === 2 && soundLikes.length === 0) ||
+                (this.type === 3 && lessonLikes.length === 0) ||
+                (this.type === 4 && soulLikes.length !== 3)
+            ))
+        ) {
             this.textNext.textContent = "К результатам"
         }
 
@@ -344,7 +366,16 @@ class ProgressBar {
     delProg() {
         --this.prog
         this.changeCifra()
-        this.textNext.textContent = "К следующему тесту"
+        if (this.prog === 3 && (
+            (this.type === 1 && designLikes.length === 0) ||
+            (this.type === 2 && soundLikes.length === 0) ||
+            (this.type === 3 && lessonLikes.length === 0) ||
+            (this.type === 4 && soulLikes.length !== 3)
+        )){
+            this.textNext.textContent = "К результатам"
+        }
+        else
+            this.textNext.textContent = "К следующему тесту"
     }
 
     checkProg() {

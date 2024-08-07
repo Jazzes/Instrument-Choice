@@ -16,10 +16,10 @@ body {
 
 .mainCONT *{
     box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .RooT {
-    font-family: 'Montserrat', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +29,6 @@ body {
 
 .TechSupport {
     display: none;
-    font-family: 'Montserrat', sans-serif;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -86,6 +85,134 @@ body {
     }
 }
 
+
+.progressBarr {
+    width: 380px;
+    height: 140px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    bottom: 0;
+    background: white;
+    margin-top: 20px;
+    padding: 15px 15px 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 5;
+    position: fixed;
+}
+
+.progressBarr__row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.progressBarr__main__pos{
+    display: flex;
+    justify-content: space-between;
+}
+
+.progressBarr__row__item {
+    width: 48%;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: black !important;
+    text-decoration: 1px solid underline black !important;
+}
+
+.progressBarr__row__item__circ {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 20px;
+    background: #E1E1E1;
+    margin-right: 3px;
+    transition: .3s linear all;
+}
+
+.progressBarr__row__item__circ__process {
+    background: #9281FF;
+}
+
+.progressBarr__row__item__circ__done {
+    background: #42CA3F;
+}
+
+.progressBarr__next {
+    border-radius: 50px;
+    padding: 8px 16px;
+    font-weight: 500;
+    font-size: 15px;
+    background: #000000;
+    color: white !important;
+    border: 1px solid #000000;
+    cursor: pointer;
+    transition: .3s linear all;
+    text-decoration: none;
+}
+
+.progressBarr__next:hover {
+    background: white;
+    color: #000000 !important;
+}
+
+.progressBarr__percent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.progressBarr__percent__val {
+    position: relative;
+}
+
+.progressBarr__percent__cif {
+    position: absolute;
+    top: calc(50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.progressBarr__progSVG g path{
+    animation: .3s linear appEAR;
+}
+
+@keyframes appEAR {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 400px){
+    .progressBarr{
+        width: 300px;
+        height: 180px;
+    }
+
+    .progressBarr__progSVG{
+        height: 40px;
+    }
+
+    .progressBarr__main__pos{
+        display: block;
+    }
+
+    .progressBarr__row__item{
+        margin-bottom: 5px;
+    }
+
+}
+
 .FimboContainer {
     display: flex;
     width: 1160px;
@@ -98,13 +225,23 @@ body {
 .fim__block__1{
     display: flex;
     align-items: center;
-    width: 450px;
+    width: 500px;
     justify-content: space-between;
+    cursor: pointer;
+}
+
+.fim__block__1 img{
+    transition: .15s linear all;
+}
+
+.fim__block__1:hover img{
+    transform: scale(1.05)
 }
 
 .fim__block__img{
     width: 300px;
     border-radius: 50%;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
 }
 
 .fim__block__img__name{
@@ -116,6 +253,7 @@ body {
     width: 100px;
     margin-bottom: 10px;
     border-radius: 50%;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
 }
 
 .fim__block__2{
@@ -123,6 +261,25 @@ body {
     display: flex;
     justify-content: center;
     padding: 0 10px;
+    flex-direction: column;
+}
+
+.blackButtonBe{
+    align-self: center;
+    margin-top: 10px;
+    background: black;
+    border: 1px solid black;
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
+    padding: 8px 16px;
+    cursor: pointer;
+    color: white !important;
+    border-radius: 50px;
+    transition: .3s linear all;
+    text-decoration: none;
+}
+.blackButtonBe:hover{
+    background: white;
+    color: black !important;
 }
 
 .fim__block__sizeOfSale{
@@ -145,9 +302,91 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
 }
 
+.fim__block__4__item img{
+    transition: .15s linear all;
+}
 
+.fim__block__4__item:hover img {
+    transform: scale(1.1);
+}
+
+.CrossToClose{
+    width: 25px;
+    height: 25px;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    border-radius: 30px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+    transition: .3s linear all;
+    z-index: 2;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2),
+    0 0 0 0 #d0d0d0 inset;
+}
+
+.CrossToClose:hover {
+    box-shadow:  0 0 0 0 rgba(0, 0, 0, 0.2),
+    0 0 5px #d0d0d0 inset;
+}
+
+.CrossToClose:active {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2),
+    0 0 5px #9b9b9b inset;
+}
+
+.centerInputForProm{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.inputNumForProm{
+    background: white;
+    padding: 8px 16px;
+    border: 0;
+    border-bottom: 1px solid lightgrey;
+    margin: 0;
+    font-size: inherit;
+    outline: 0;
+    transition: .3s linear all;
+}
+.inputNumForProm:focus{
+    border-bottom: 1px solid #6CBCDF;
+}
+
+.windowWithText, .windowWithReason{
+    max-width: 90%;
+    position: relative;
+    padding: 20px;
+    border-radius: 10px;
+    background: white;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.windowWithReason{
+    align-items: flex-start;
+}
+
+.centerTextCongr{
+    text-align: center;
+    font-weight: 500;
+    margin: 10px 0;
+}
+
+.congratsImg{
+    height: 30vh;
+}
 
 .nameOfPageC{
     width: 100%;
@@ -160,7 +399,7 @@ body {
     padding: 0 10px;
 }
 
-.LLoader{
+.LLoader, .BackWithWindow{
     height: 150vh;
     width: 100vw;
     position: fixed;
@@ -171,6 +410,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.BackWithWindow{
+    top: -25vh;
 }
 
 .spinner {
@@ -294,9 +537,17 @@ body {
         margin: 0;
     }
 
+    .fim__block__img__name{
+        font-size: 20px;
+    }
+
     .fim__block__4__item{
         width: 50%;
         margin-top: 10px;
+    }
+
+    .windowWithText, .windowWithReason{
+        font-size: 16px;
     }
 }
 
